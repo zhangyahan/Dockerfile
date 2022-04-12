@@ -1,0 +1,17 @@
+FROM java:8
+
+# 设置工作目录
+WORKDIR /<your-workdir>
+
+# 复制 jar 包资源
+COPY ./path/to/file.jar /<your-workdir>/file.jar
+
+# 复制静态资源
+COPY ./profile /<your-workdir>/data/profile
+
+# 设置镜像时区
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo "Asia/Shanghai" > /etc/timezone
+
+# 入口执行名称
+ENTRYPOINT ["java", "-jar", "/<your-workdir>/file.jar", "--spring.profiles.active=active"]
